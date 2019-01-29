@@ -10,4 +10,4 @@ public:
 private:
     // Any private, hardware-specific variables that need to be managed
     int pin;
-}
+};
