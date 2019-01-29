@@ -1,4 +1,5 @@
 
+#include <Arduino.h>
 #include "CSExampleHW.h"
 
 void CSExampleHW::init(int p) {
