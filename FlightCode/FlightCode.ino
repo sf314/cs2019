@@ -16,7 +16,7 @@
 
 // ********** Global data, i.e. hardware
 SoftwareSerial radio(CS_RADIO_MISO_PIN, CS_RADIO_MOSI_PIN);
-
+SoftwareSerial gpsss(CS_GPS_MISO_PIN, CS_GPS_MOSI_PIN);
 
 
 
