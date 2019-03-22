@@ -18,5 +18,6 @@
 #define CS_GPS_MISO_PIN 7
 #define CS_GPS_MOSI_PIN 8
 #define CS_LED_PIN 13
+#define CS_BME_CHIPSELECT 10
 
 #endif
