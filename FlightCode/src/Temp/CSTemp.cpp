@@ -8,6 +8,14 @@ CSTemp::CSTemp() {
 
 void CSTemp::config(int p) {
     pin = p;
+    voltage = 3300;
+    pinMode(pin, INPUT);
+}
+
+void CSTemp::config(int p, int v) {
+    pin = p;
+    voltage = v;
+    pinMode(pin, INPUT);
 }
 
 float CSTemp::read() {
@@ -25,4 +33,9 @@ float CSTemp::read() {
         double t2 = 66.756;
         return t1 - t2;
     }
+}
+
+
+int CSTemp::readRaw() {
+    return analogRead(pin);
 }
