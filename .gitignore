@@ -1,0 +1,4 @@
+
+
+## Ignore workspace stuff if you use it
+.vscode/**
