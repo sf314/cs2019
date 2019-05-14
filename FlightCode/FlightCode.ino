@@ -19,6 +19,8 @@
 #include "src/Gyro/CSGyro.h"
 #include "src/Nichrome/CSNichrome.h"
 #include "src/Volt/CSVolt.h"
+#include "src/Hall/CSHall.h"
+#include "src/Temp/CSTemp.h"
 #include "src/Telem/CSTelem.h"
 
 // ********** Global data, i.e. hardware
@@ -35,6 +37,8 @@ CSGps gps(&gpsss);
 CSGyro gyro;
 CSTelem telem;
 CSVolt volt;
+CSHall hall;
+CSTemp temp;
 CSNichrome nichrome;
 
 // Function prototypes
@@ -50,6 +54,10 @@ void setup() {
 
     bme.config();
     gyro.config();
+    volt.config(CS_VOLT_PIN);
+    nichrome.config(CS_NICHROME_PIN);
+    temp.config(CS_TEMP_PIN);
+    hall.config(CS_HALL_PIN);
 }
 
 // ********** Loop
@@ -88,9 +96,9 @@ void loop() {
         telem.gpsLon = gps.lon;
         telem.gpsAlt = gps.altitude;
         telem.gpsSats = gps.satellites;
-        // telem.pitch = gyro.getPitch();
-        // telem.roll = gyro.getRoll();
-        // telem.bladeSpinRate = 
+        // telem.pitch = gyro.getPitch(); // Spin rate along x and y?
+        // telem.roll = gyro.getRoll(); // Spin rate along z axis?
+        telem.bladeSpinRate = hall.getCurrentCount(); hall.clearCount(); // Keep track of hall sensor hits
         // telem.state; // Does not need to be set manually here
         
         // Transmit telem over serial and radio
