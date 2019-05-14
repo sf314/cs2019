@@ -83,6 +83,16 @@ void loop() {
         
         GyroData_t gyroData = gyro.getData();
 
+        float met; // Float or double?
+        if (gps.time < 1.00) { // GPS has not received lock
+            // Count up from saved GPS time?
+            // Retrieve previous GPS time, then add (currentMS / 1000)
+        } else {
+            // Use GPS time as met 
+            met = gps.time;
+            // Save this time to CoreData (4 bytes)
+        }
+
         telem.teamId = 3623;
         // telem.met = gps.getTime() - startTime;
         telem.met = currentMS / 1000;

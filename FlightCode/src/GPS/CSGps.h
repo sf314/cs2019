@@ -50,7 +50,7 @@ public:
     double lon;
     
     // Time: 
-    double time;
+    float time;
     // uint8_t hour, minute, seconds, year, month, day;
 
     
