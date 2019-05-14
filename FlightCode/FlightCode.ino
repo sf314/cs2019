@@ -22,6 +22,7 @@
 #include "src/Hall/CSHall.h"
 #include "src/Temp/CSTemp.h"
 #include "src/Telem/CSTelem.h"
+#include "src/Comms/CSComms.h"
 
 // ********** Global data, i.e. hardware
 SoftwareSerial radio(CS_RADIO_MISO_PIN, CS_RADIO_MOSI_PIN);
@@ -40,6 +41,7 @@ CSVolt volt;
 CSHall hall;
 CSTemp temp;
 CSNichrome nichrome;
+CSComms comms;
 
 // Function prototypes
 void handleCommands(char c);
@@ -49,6 +51,8 @@ void setup() {
     Serial.begin(9600);
     radio.begin(9600);
     gps.begin(9600);
+    
+    comms.setRadio(&radio);
 
     pinMode(CS_LED_PIN, OUTPUT);
 
@@ -112,8 +116,7 @@ void loop() {
         // telem.state; // Does not need to be set manually here
         
         // Transmit telem over serial and radio
-        Serial.println(telem.toString());
-        radio.println(telem.toString());
+        comms.txTelem(telem);
         
         // Set time for next loop
         prevMS = currentMS;
