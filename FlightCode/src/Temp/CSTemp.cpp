@@ -12,9 +12,9 @@ void CSTemp::config(int p) {
     pinMode(pin, INPUT);
 }
 
-void CSTemp::config(int p, int v) {
+void CSTemp::config(int p, int mv) {
     pin = p;
-    voltage = v;
+    voltage = mv;
     pinMode(pin, INPUT);
 }
 

@@ -7,7 +7,7 @@ class CSTemp {
 public:
     CSTemp();
     void config(int p);
-    void config(int p, int v);
+    void config(int p, int mv); // Voltage in millivolts
     float read();
     int readRaw();
 private:
