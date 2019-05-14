@@ -14,13 +14,16 @@ public:
     CSNichrome(void);
     
     void config(int p);
+    void setMaxCutTime(int ms);
     void start();
     void stop();
     void update();
+
+    bool isActive;
 private:
     int pin;
-    bool isActive;
     unsigned long startMillis;
+    int maxCutTime;
 };
 
 

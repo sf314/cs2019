@@ -3,13 +3,13 @@
 
 
 CSNichrome::CSNichrome() {
-    
+    isActive = false;
+    startMillis = 0;
+    maxCutTime = 7000;
 }
 
 void CSNichrome::config(int p) {
     pin = p;
-    isActive = false;
-    startMillis = 0;
 
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
@@ -28,7 +28,7 @@ void CSNichrome::stop() {
 
 void CSNichrome::update() {
     // Enforce 10-second max cut time for safety
-    if (millis() - startMillis >= 10000) {
+    if (millis() - startMillis >= maxCutTime) {
         // Exceeded burn limit. Auto-shutoff
         digitalWrite(pin, LOW);
         isActive = false;

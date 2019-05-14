@@ -6,6 +6,7 @@ CSNichrome nichrome;
 void setup() {
     Serial.begin(9600);
     nichrome.config(14);
+    nichrome.setMaxCutTime(6000);
 }
 
 void loop() {
