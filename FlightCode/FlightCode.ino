@@ -83,7 +83,7 @@ void loop() {
         telem.pressure = bme.readPressure();
         telem.temp = bme.readTemp();
         telem.voltage = volt.read();
-        // telem.gpsTime = gps.timeFormatted();
+        telem.gpsTime = gps.time;
         telem.gpsLat = gps.lat;
         telem.gpsLon = gps.lon;
         telem.gpsAlt = gps.altitude;

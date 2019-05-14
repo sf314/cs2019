@@ -17,7 +17,7 @@ public:
     float pressure = 0.0;
     float temp = 0.0;
     float voltage = 0.0;
-    String gpsTime = "2019-01-01:00:00:00";
+    double gpsTime = 0.0;
     float gpsLat = 0.00;
     float gpsLon = 0.00;
     float gpsAlt = 0.00;

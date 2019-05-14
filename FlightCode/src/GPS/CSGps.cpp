@@ -14,7 +14,7 @@ CSGps::CSGps(SoftwareSerial* ss) {
     lon = 0;
     time = 0;
     
-    hour = 0, minute = 0, seconds = 0, year = 0, month = 0, day = 0;
+    // hour = 0, minute = 0, seconds = 0, year = 0, month = 0, day = 0;
     
     shouldDebug = false;
 }
@@ -97,9 +97,11 @@ void CSGps::parsePacket() {
         // cout << "^^This was a GPGGA packet!" << endl;
         // lat = 
         if (stringVector.at(6) == "1") { // Only update if locked
-            // Serial.println("GPGGA locked!");
-            // Serial.println("\tlat: " + stringVector.at(2));
-            // Serial.println("\tlon: " + stringVector.at(4));
+            fix = true;
+            Serial.println("GPGGA locked!");
+            Serial.println("\tlat: " + stringVector.at(2));
+            Serial.println("\tlon: " + stringVector.at(4));
+            Serial.println("\ttime: " = stringVector.at(1));
             lat = atof(stringVector.at(2).c_str());
             lon = atof(stringVector.at(4).c_str());
             time = atof(stringVector.at(1).c_str());
@@ -107,6 +109,8 @@ void CSGps::parsePacket() {
             satellites = atoi(stringVector.at(7).c_str());
             
             packetReceived = true;
+        } else {
+            fix = false;
         }
     } else {
         packetReceived = false; // Ignore all other types

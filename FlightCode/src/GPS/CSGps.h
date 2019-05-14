@@ -48,10 +48,11 @@ public:
     // Position: Degrees
     double lat;
     double lon;
-    double time;
     
     // Time: 
-    uint8_t hour, minute, seconds, year, month, day;
+    double time;
+    // uint8_t hour, minute, seconds, year, month, day;
+
     
     bool shouldDebug;
     String temp;
