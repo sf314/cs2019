@@ -8,20 +8,20 @@ CSTelem::CSTelem() {
 }
 
 String CSTelem::toString() {
-    return String(teamId) + ","
-        String(met) + ","
-        String(packetCount) + ","
-        String(altitude) + ","
-        String(pressure) +  ","
-        String(temp) + ","
-        String(voltage) + ","
-        String(gpsTime) + ","
-        String(gpsLat) + ","
-        String(gpsLon) + ","
-        String(gpsAlt) + ","
-        String(gpsSats) + ","
-        String(pitch) + ","
-        String(roll) + ","
-        String(bladeSpinRate) + ","
+    return String(teamId) + "," +
+        String(met) + "," +
+        String(packetCount) + "," +
+        String(altitude) + "," +
+        String(pressure) +  "," +
+        String(temp) + "," +
+        String(voltage) + "," +
+        String(gpsTime) + "," +
+        String(gpsLat) + "," +
+        String(gpsLon) + "," +
+        String(gpsAlt) + "," +
+        String(gpsSats) + "," +
+        String(pitch) + "," +
+        String(roll) + "," +
+        String(bladeSpinRate) + "," +
         String(state);
 }

@@ -17,6 +17,7 @@
 #include "src/GPS/CSGps.h"
 #include "src/BME/CSBme.h"
 #include "src/Gyro/CSGyro.h"
+#include "src/Nichrome/CSNichrome.h"
 #include "src/Telem/CSTelem.h"
 
 // ********** Global data, i.e. hardware
@@ -32,7 +33,8 @@ CSBme bme;
 CSGps gps(&gpsss);
 CSGyro gyro;
 CSTelem telem;
-CSVolt volt;
+// CSVolt volt;
+CSNichrome nichrome;
 
 // Function prototypes
 void handleCommands(char c);
@@ -71,10 +73,11 @@ void loop() {
         GyroData_t gyroData = gyro.getData();
 
         telem.teamId = 3623;
-        telem.met = gps.getTime() - startTime;
+        // telem.met = gps.getTime() - startTime;
+        telem.met = currentMS / 1000;
         // telem.packetCount; // Does not need to be set manually here
         telem.altitude = bme.readAlt();
-        telem.pressure = bme.pressure();
+        telem.pressure = bme.readPressure();
         telem.temp = bme.readTemp();
         // telem.voltage = volt.read();
         // telem.gpsTime = gps.timeFormatted();
@@ -108,6 +111,9 @@ void handleCommands(char c) {
         Serial.println("Forcing cut");
         nichrome.start();
         break;
+    case 'w':
+        Serial.println("Ending cut");
+        nichrome.stop();
     default:
         break;
     }
