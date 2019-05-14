@@ -9,6 +9,8 @@ void setup() {
 }
 
 void loop() {
+
+    nichrome.update(); // Pseudothread
     
     if (Serial.available()) {
         char c = Serial.read();

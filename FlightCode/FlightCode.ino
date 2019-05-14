@@ -69,6 +69,8 @@ void loop() {
     // Update GPS and other async functions
     gps.update();
 
+    nichrome.update();
+
     if (currentMS - prevMS >= 1000) {
         
         GyroData_t gyroData = gyro.getData();
@@ -80,7 +82,7 @@ void loop() {
         telem.altitude = bme.readAlt();
         telem.pressure = bme.readPressure();
         telem.temp = bme.readTemp();
-        // telem.voltage = volt.read();
+        telem.voltage = volt.read();
         // telem.gpsTime = gps.timeFormatted();
         telem.gpsLat = gps.lat;
         telem.gpsLon = gps.lon;

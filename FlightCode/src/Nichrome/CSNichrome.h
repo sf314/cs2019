@@ -16,8 +16,11 @@ public:
     void config(int p);
     void start();
     void stop();
+    void update();
 private:
     int pin;
+    bool isActive;
+    unsigned long startMillis;
 };
 
 
