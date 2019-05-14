@@ -101,7 +101,7 @@ void CSGps::parsePacket() {
             Serial.println("GPGGA locked!");
             Serial.println("\tlat: " + stringVector.at(2));
             Serial.println("\tlon: " + stringVector.at(4));
-            Serial.println("\ttime: " = stringVector.at(1));
+            Serial.println("\ttime: " + stringVector.at(1));
             lat = atof(stringVector.at(2).c_str());
             lon = atof(stringVector.at(4).c_str());
             time = atof(stringVector.at(1).c_str());
