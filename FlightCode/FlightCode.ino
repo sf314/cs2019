@@ -18,6 +18,7 @@
 #include "src/BME/CSBme.h"
 #include "src/Gyro/CSGyro.h"
 #include "src/Nichrome/CSNichrome.h"
+#include "src/Volt/CSVolt.h"
 #include "src/Telem/CSTelem.h"
 
 // ********** Global data, i.e. hardware
@@ -33,7 +34,7 @@ CSBme bme;
 CSGps gps(&gpsss);
 CSGyro gyro;
 CSTelem telem;
-// CSVolt volt;
+CSVolt volt;
 CSNichrome nichrome;
 
 // Function prototypes
