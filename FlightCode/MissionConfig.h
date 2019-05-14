@@ -20,4 +20,9 @@
 #define CS_LED_PIN 13
 #define CS_BME_CHIPSELECT 10
 
+#define CS_VOLT_PIN 2
+#define CS_NICHROME_PIN 3
+#define CS_TEMP_PIN 4
+#define CS_HALL_PIN 5
+
 #endif
