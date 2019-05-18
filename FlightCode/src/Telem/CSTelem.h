@@ -26,6 +26,9 @@ public:
     float roll = 0.0;
     float bladeSpinRate = 0.0;
     int state = 0;
+
+    // Extra fields for state tracking
+    float __velocity;
     
     // Access
     String toString(void);
