@@ -51,7 +51,7 @@ void verifyState(void);
 // States
 void task_launchpad(void);
 void task_ascent(void);
-void task_descent());
+void task_descent();
 void task_release(void);
 void task_landed(void);
 
@@ -197,11 +197,11 @@ void task_launchpad() {
 
 void task_ascent() {
     // Wait until you're descending 
-    if (telem._velocity < CS_DESCENT_VEL_THRESH) {
+    if (telem.__velocity < CS_DESCENT_VEL_THRESH) {
         telem.state = STATE_DESCENT;
         comms.txAlert("Now descending");
     }
-    
+
     comms.txTelem(telem);
 }
 
