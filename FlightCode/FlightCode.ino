@@ -36,15 +36,24 @@ unsigned long startTime = 0; // time (seconds) since epoch
 CSBme bme;
 CSGps gps(&gpsss);
 CSGyro gyro;
-CSTelem telem;
 CSVolt volt;
 CSHall hall;
 CSTemp temp;
 CSNichrome nichrome;
 CSComms comms;
 
+CSTelem telem;
+
 // Function prototypes
 void handleCommands(char c);
+void verifyState(void);
+
+// States
+void task_launchpad(void);
+void task_ascent(void);
+void task_descent());
+void task_release(void);
+void task_landed(void);
 
 // ********** Setup
 void setup() {
@@ -99,9 +108,13 @@ void loop() {
 
         telem.teamId = 3623;
         // telem.met = gps.getTime() - startTime;
-        telem.met = currentMS / 1000;
-        // telem.packetCount; // Does not need to be set manually here
-        telem.altitude = bme.readAlt();
+        telem.met = currentMS / 1000; // Simple, for now
+        telem.packetCount++; // Does not need to be set manually here // <- what?
+
+        float newAlt = bme.readAlt();
+        telem.__velocity = newAlt - telem.altitude;
+        telem.altitude = newAlt;
+
         telem.pressure = bme.readPressure();
         telem.temp = bme.readTemp();
         telem.voltage = volt.read();
@@ -110,13 +123,16 @@ void loop() {
         telem.gpsLon = gps.lon;
         telem.gpsAlt = gps.altitude;
         telem.gpsSats = gps.satellites;
-        // telem.pitch = gyro.getPitch(); // Spin rate along x and y?
-        // telem.roll = gyro.getRoll(); // Spin rate along z axis?
+        telem.pitch = gyroData.x; // x or y? Both?
+        telem.roll = gyroData.z; // Spin rate along z axis?
         telem.bladeSpinRate = hall.getCurrentCount(); hall.clearCount(); // Keep track of hall sensor hits
         // telem.state; // Does not need to be set manually here
         
-        // Transmit telem over serial and radio
-        comms.txTelem(telem);
+        // Transmit telem over serial and radio 
+        comms.txTelem(telem); // Should be done in individual state task
+
+        // check state and perform modifications as necessary
+        verifyState();
         
         // Set time for next loop
         prevMS = currentMS;
@@ -141,4 +157,78 @@ void handleCommands(char c) {
     default:
         break;
     }
+}
+
+
+void verifyState() {
+    // Check state and perform modifications if necessary 
+    switch (telem.state) {
+        case STATE_LAUNCHPAD:
+            task_launchpad();
+            break;
+        case STATE_ASCENT:
+            task_ascent();
+            break;
+        case STATE_DESCENT:
+            task_descent();
+            break;
+        case STATE_RELEASE:
+            task_release();
+            break;
+        case STATE_LANDED: 
+            task_landed();
+            break;
+        default:
+            comms.txAlert("Bad state value " + String(telem.state));
+            break;
+    }
+}
+
+// States
+void task_launchpad() {
+    // Wait until velocity is high and you're above alt thresh
+    if (telem.__velocity > CS_ASCENT_VEL_THRESH && telem.altitude > CS_GROUND_ALT_THRESH) {
+        telem.state = STATE_ASCENT;
+        comms.txAlert("Now ascending");
+    }
+
+    comms.txTelem(telem);
+}
+
+void task_ascent() {
+    // Wait until you're descending 
+    if (telem._velocity < CS_DESCENT_VEL_THRESH) {
+        telem.state = STATE_DESCENT;
+        comms.txAlert("Now descending");
+    }
+    
+    comms.txTelem(telem);
+}
+
+void task_descent() {
+    // Handle release trigger 
+    if (telem.altitude < CS_DEPLOY_ALT) {
+        telem.state = STATE_RELEASE;
+        nichrome.start(); // Will handle itself automatically 
+        comms.txAlert("Now releasing");
+    }
+
+    comms.txTelem(telem);
+}
+
+void task_release() {
+    // Wait until you've landed 
+    if (telem.altitude < CS_GROUND_ALT_THRESH && telem.__velocity > CS_DESCENT_VEL_THRESH) {
+        telem.state = STATE_LANDED;
+        comms.txAlert("Now landing");
+    }
+
+    comms.txTelem(telem);
+}
+
+void task_landed() {
+    // Anything?
+
+    // Play a buzzer 
+
 }

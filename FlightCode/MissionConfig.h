@@ -9,8 +9,10 @@
 #define MISSION_CONFIG_H
 
 // ********** Mission Parameters
-#define CS_DEPLOY_ALT 450
+#define CS_DEPLOY_ALT 460
 #define CS_GROUND_ALT_THRESH 50
+#define CS_DESCENT_VEL_THRESH -3
+#define CS_ASCENT_VEL_THRESH 3
 
 // ********** Hardware Pinout
 #define CS_RADIO_MISO_PIN 0
@@ -24,5 +26,12 @@
 #define CS_NICHROME_PIN 3
 #define CS_TEMP_PIN 4
 #define CS_HALL_PIN 5
+
+// ********* States 
+#define STATE_LAUNCHPAD 0
+#define STATE_ASCENT 1
+#define STATE_DESCENT 2
+#define STATE_RELEASE 3
+#define STATE_LANDED 4
 
 #endif
