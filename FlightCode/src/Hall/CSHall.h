@@ -7,11 +7,10 @@ public:
     void config(int p);
 
     int getCurrentCount(void);
-    void increment(void); // Use as callback
+    static void increment(void); // Use as callback
     void clearCount(void);
 private:
     int pin;
-    int count;
 };
 
 #endif 
