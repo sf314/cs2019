@@ -34,4 +34,7 @@
 #define STATE_RELEASE 3
 #define STATE_LANDED 4
 
+// ********** Core Data Keys
+#define CDKEY_GROUND_ALT "ALT_G"
+
 #endif
