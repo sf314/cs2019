@@ -4,11 +4,13 @@
 
 CSVolt::CSVolt() {
     pin = 0; // Default
+    sampleSize = 1;
 }
 
 void CSVolt::config(int p) {
     pin = p;
     pinMode(p, INPUT);
+    sampleSize = 1;
 }
 
 void CSVolt::setSampleSize(int newSize) {
