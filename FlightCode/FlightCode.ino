@@ -24,6 +24,7 @@
 #include "src/Telem/CSTelem.h"
 #include "src/Comms/CSComms.h"
 #include "src/CoreData/CSCoreData.h"
+#include "src/SDCard/CSSDCard.h"
 
 // ********** Global data, i.e. hardware
 SoftwareSerial radio(CS_RADIO_MISO_PIN, CS_RADIO_MOSI_PIN);
@@ -44,6 +45,7 @@ CSTemp temp;
 CSNichrome nichrome;
 CSComms comms;
 CSCoreData coreData;
+CSSDCard sd;
 
 CSTelem telem;
 
@@ -76,6 +78,7 @@ void setup() {
     nichrome.config(CS_NICHROME_PIN);
     temp.config(CS_TEMP_PIN);
     hall.config(CS_HALL_PIN);
+    sd.config("TELEM.TXT");
     
     // Read data from coreData to init system on bootup
     float groundAlt = coreData.readFloat(CDKEY_GROUND_ALT);
@@ -137,8 +140,9 @@ void loop() {
         telem.bladeSpinRate = hall.getCurrentCount(); hall.clearCount(); // Keep track of hall sensor hits
         // telem.state; // Does not need to be set manually here
         
-        // Transmit telem over serial and radio 
+        // Transmit telem over serial and radio and SD
         comms.txTelem(telem); // Should be done in individual state task
+        sd.write(telem.toString());
 
         // check state and perform modifications as necessary
         verifyState();
