@@ -34,3 +34,19 @@ GyroData_t CSGyro::getData() {
     
     return g;
 }
+
+AccelData_t CSGyro::getAccelData() {
+    imu.readAccelData(imu.accelCount);
+    imu.getAres();
+    
+    imu.ax = (float)imu.accelCount[0]*imu.aRes;
+    imu.ay = (float)imu.accelCount[1]*imu.aRes;
+    imu.az = (float)imu.accelCount[2]*imu.aRes;
+    
+    AccelData_t a;
+    a.x = imu.ax;
+    a.y = imu.ay;
+    a.z = imu.az;
+    
+    return a;
+}

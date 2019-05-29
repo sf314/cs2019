@@ -17,6 +17,12 @@ typedef struct {
     float z;
 } GyroData_t;
 
+typedef struct {
+    float x;
+    float y;
+    float z;
+} AccelData_t;
+
 class CSGyro {
 public:
     // Init
@@ -27,6 +33,7 @@ public:
     
     // Funcs
     GyroData_t getData();
+    AccelData_t getAccelData();
     
 private:
     // MPU_9250 myIMU;
