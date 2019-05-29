@@ -23,6 +23,7 @@
 #include "src/Temp/CSTemp.h"
 #include "src/Telem/CSTelem.h"
 #include "src/Comms/CSComms.h"
+#include "src/CoreData/CSCoreData.h"
 
 // ********** Global data, i.e. hardware
 SoftwareSerial radio(CS_RADIO_MISO_PIN, CS_RADIO_MOSI_PIN);
@@ -30,6 +31,7 @@ SoftwareSerial gpsss(CS_GPS_MISO_PIN, CS_GPS_MOSI_PIN);
 unsigned long currentMS = 0;
 unsigned long prevMS = 0;
 unsigned long startTime = 0; // time (seconds) since epoch
+bool ledOn = false;
 
 
 // Hardware 
@@ -41,6 +43,7 @@ CSHall hall;
 CSTemp temp;
 CSNichrome nichrome;
 CSComms comms;
+CSCoreData coreData;
 
 CSTelem telem;
 
@@ -60,6 +63,8 @@ void setup() {
     Serial.begin(9600);
     radio.begin(9600);
     gps.begin(9600);
+
+    coreData.config();
     
     comms.setRadio(&radio);
 
@@ -71,6 +76,10 @@ void setup() {
     nichrome.config(CS_NICHROME_PIN);
     temp.config(CS_TEMP_PIN);
     hall.config(CS_HALL_PIN);
+    
+    // Read data from coreData to init system on bootup
+    float groundAlt = coreData.readFloat(CDKEY_GROUND_ALT);
+    bme.setGroundAlt(groundAlt);
 }
 
 // ********** Loop
@@ -136,6 +145,16 @@ void loop() {
         
         // Set time for next loop
         prevMS = currentMS;
+        
+        // Change light state 
+        if (ledOn) {
+            digitalWrite(CS_LED_PIN, LOW);
+            ledOn = false;
+        } else {
+            digitalWrite(CS_LED_PIN, HIGH);
+            ledOn = true;
+        }
+        
     }
 
 
@@ -144,16 +163,25 @@ void loop() {
 
 void handleCommands(char c) {
     switch (c) {
-    case 'g':
-        Serial.println("Setting ground height...");
+    case 'g': 
+        {
+            float newGroundAlt = bme.readAltRaw();
+            bme.setGroundAlt(newGroundAlt);
+            coreData.writeFloat(CDKEY_GROUND_ALT, newGroundAlt);
+            comms.txAlert("Setting new ground height to " + String(newGroundAlt));
+        }
         break;
     case 'q':
-        Serial.println("Forcing cut");
-        nichrome.start();
+        {
+            comms.txAlert("Forcing cut");
+            nichrome.start();
+        }
         break;
     case 'w':
-        Serial.println("Ending cut");
-        nichrome.stop();
+        {
+            comms.txAlert("Ending cut");
+            nichrome.stop();
+        }
     default:
         break;
     }
