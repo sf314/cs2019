@@ -4,6 +4,7 @@
 
 // Fileprivate var
 volatile int CSHall_count = 0;
+static void increment(void);
 
 CSHall::CSHall(void) {
     CSHall_count = 0;
@@ -12,7 +13,8 @@ CSHall::CSHall(void) {
 
 void CSHall::config(int p) {
     // Setup callback function and things on that pin 
-    attachInterrupt(p, increment, RISING);
+    // Serial.println("Configuring with pin " + String(p));
+    attachInterrupt(digitalPinToInterrupt(p), increment, RISING);
     pin = p;
 }
 
@@ -20,7 +22,8 @@ int CSHall::getCurrentCount(void) {
     return CSHall_count;
 }
 
-static void CSHall::increment(void) {
+static void increment() { /// ?
+    Serial.println("interrupt: increment");
     CSHall_count++;
 }
 

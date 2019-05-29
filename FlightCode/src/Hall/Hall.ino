@@ -1,11 +1,11 @@
 
 #include <Arduino.h>
 #include "CSHall.h"
-#define HALL_THRESHOLD 64
+#define HALL_THRESHOLD 350
 
 CSHall hall;
 
-int hallPin = 14;
+int hallPin = 20;
 
 void setup() {
     Serial.begin(9600);
@@ -15,11 +15,12 @@ void setup() {
 
 void loop() {
 
+    // ***** Read from interrupt at 1Hz
     delay(1000);
     Serial.println(hall.getCurrentCount());
     hall.clearCount();
     
-    // // Read constantly from sensor (analog)
+    // ***** Read constantly from sensor (analog)
     // int value = analogRead(hallPin);
     // Serial.print("Val: " + String(value));
     
