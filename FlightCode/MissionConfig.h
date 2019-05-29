@@ -25,7 +25,7 @@
 #define CS_VOLT_PIN 2
 #define CS_NICHROME_PIN 3
 #define CS_TEMP_PIN 4
-#define CS_HALL_PIN 5
+#define CS_HALL_PIN 20
 
 // ********* States 
 #define STATE_LAUNCHPAD 0
