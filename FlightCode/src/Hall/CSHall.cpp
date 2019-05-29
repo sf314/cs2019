@@ -23,7 +23,7 @@ int CSHall::getCurrentCount(void) {
 }
 
 static void increment() { /// ?
-    Serial.println("interrupt: increment");
+    // Serial.println("interrupt: increment");
     CSHall_count++;
 }
 
