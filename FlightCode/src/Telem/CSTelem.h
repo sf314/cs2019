@@ -28,7 +28,7 @@ public:
     int state = 0;
 
     // Extra fields for state tracking
-    float __velocity;
+    float __velocity = 0.0;
     
     // Access
     String toString(void);

@@ -14,16 +14,17 @@ CSHall::CSHall(void) {
 void CSHall::config(int p) {
     // Setup callback function and things on that pin 
     // Serial.println("Configuring with pin " + String(p));
-    attachInterrupt(digitalPinToInterrupt(p), increment, RISING);
+    attachInterrupt(digitalPinToInterrupt(p), increment, FALLING);
     pin = p;
 }
 
 int CSHall::getCurrentCount(void) {
+    Serial.println("blade spin rate: " + String(CSHall_count));
     return CSHall_count;
 }
 
 static void increment() { /// ?
-    // Serial.println("interrupt: increment");
+    Serial.println("interrupt: increment");
     CSHall_count++;
 }
 
