@@ -141,7 +141,7 @@ void loop() {
         // telem.state; // Does not need to be set manually here
         
         // Transmit telem over serial and radio and SD
-        comms.txTelem(telem.toString()); // Should be done in individual state task
+        // comms.txTelem(telem.toString()); // Should be done in individual state task
         sd.write(telem.toString());
 
         // check state and perform modifications as necessary
