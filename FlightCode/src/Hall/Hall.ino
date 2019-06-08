@@ -9,7 +9,6 @@ int hallPin = 20;
 
 void setup() {
     Serial.begin(9600);
-    pinMode(hallPin, INPUT);
     hall.config(hallPin);
 }
 
@@ -17,8 +16,7 @@ void loop() {
 
     // ***** Read from interrupt at 1Hz
     delay(1000);
-    Serial.println(hall.getCurrentCount());
-    hall.clearCount();
+    Serial.println(hall.getRpm());
     
     // ***** Read constantly from sensor (analog)
     // int value = analogRead(hallPin);
