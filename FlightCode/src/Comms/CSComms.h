@@ -14,6 +14,7 @@ public:
     void println(String s); // Direct access 
 
     void txTelem(CSTelem t);
+    void txTelem(String s);
     void txAlert(String s); 
 private:
     SoftwareSerial* radio;
