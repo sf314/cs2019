@@ -15,8 +15,9 @@ CSHall::CSHall(void) {
 void CSHall::config(int p) {
     // Setup callback function and things on that pin 
     // Serial.println("Configuring with pin " + String(p));
-    attachInterrupt(digitalPinToInterrupt(p), update, RISING);
     pin = p;
+    pinMode(p, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(p), update, RISING);
 }
 
 float CSHall::getRpm() {
