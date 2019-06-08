@@ -137,11 +137,11 @@ void loop() {
         telem.gpsSats = gps.satellites;
         telem.pitch = gyroData.x; // x or y? Both?
         telem.roll = gyroData.z; // Spin rate along z axis?
-        telem.bladeSpinRate = hall.getCurrentCount(); hall.clearCount(); // Keep track of hall sensor hits
+        telem.bladeSpinRate = hall.getRpm(); // Keep track of hall sensor hits
         // telem.state; // Does not need to be set manually here
         
         // Transmit telem over serial and radio and SD
-        comms.txTelem(telem); // Should be done in individual state task
+        comms.txTelem(telem.toString()); // Should be done in individual state task
         sd.write(telem.toString());
 
         // check state and perform modifications as necessary
