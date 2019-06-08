@@ -20,6 +20,11 @@ void CSComms::txTelem(CSTelem t) {
     radio->println(t.toString());
 }
 
+void CSComms::txTelem(String s) {
+    Serial.println(s);
+    radio->println(s);
+}
+
 void CSComms::txAlert(String s) {
     Serial.println("Alert," + s);
     radio->println("Alert," + s);
