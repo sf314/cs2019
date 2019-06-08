@@ -3,31 +3,60 @@
 #include "CSHall.h"
 
 // Fileprivate var
-volatile int CSHall_count = 0;
-static void increment(void);
+// volatile int CSHall_count = 0;
+volatile float CSHall_rpm = 0.0;
+volatile unsigned long CSHall_time = 0;
+static void update(void);
 
 CSHall::CSHall(void) {
-    CSHall_count = 0;
     pin = 0;
 }
 
 void CSHall::config(int p) {
     // Setup callback function and things on that pin 
     // Serial.println("Configuring with pin " + String(p));
-    attachInterrupt(digitalPinToInterrupt(p), increment, FALLING);
+    attachInterrupt(digitalPinToInterrupt(p), update, RISING);
     pin = p;
 }
 
-int CSHall::getCurrentCount(void) {
-    Serial.println("blade spin rate: " + String(CSHall_count));
-    return CSHall_count;
+float CSHall::getRpm() {
+    // If it's been more than a second since the last ping, decay the value (?)
+    // This will achieve RPM that is below 60
+    unsigned long currentTime = millis();
+    
+    if (currentTime - CSHall_time >= 1000) {
+        unsigned long delta_time = currentTime - CSHall_time;
+        float test_rpm = (1000.0 / delta_time) * 60.0 / 2;
+        
+        if (test_rpm < 10) {
+            return 0.0;
+        }
+        
+        return test_rpm;
+    }
+    
+    // Otherwise, return the currently calculated value
+    if (CSHall_rpm < 10) {
+        return 0.0;
+    }
+    return CSHall_rpm;
 }
 
-static void increment() { /// ?
-    Serial.println("interrupt: increment");
-    CSHall_count++;
-}
-
-void CSHall::clearCount(void) {
-    CSHall_count = 0;
+static void update() { 
+    
+    // Calculate time delta
+    unsigned long current_time = millis();
+    unsigned long delta_time = current_time - CSHall_time;
+    
+    if (delta_time < 200) {
+        return;
+    }
+    
+    // Update RPM value 
+    CSHall_rpm = (1000.0 / delta_time) * 60.0;
+    
+    // Update time
+    CSHall_time = current_time;
+    
+    // Serial.println("interrupt: update RPM @ delt = " + String(delta_time));
 }

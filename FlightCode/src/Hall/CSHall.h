@@ -6,8 +6,7 @@ public:
     CSHall(void);
     void config(int p);
 
-    int getCurrentCount(void);
-    void clearCount(void);
+    float getRpm(void);
 private:
     int pin;
 };
