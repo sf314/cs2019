@@ -83,6 +83,13 @@ void setup() {
     // Read data from coreData to init system on bootup
     float groundAlt = coreData.readFloat(CDKEY_GROUND_ALT);
     bme.setGroundAlt(groundAlt);
+    
+    pinMode(17, OUTPUT);
+    digitalWrite(17, LOW);
+    delay(500);
+    digitalWrite(17, HIGH);
+    delay(3000);
+    digitalWrite(17, LOW);
 }
 
 // ********** Loop
