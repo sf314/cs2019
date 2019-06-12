@@ -88,9 +88,9 @@ void setup() {
     digitalWrite(17, LOW);
     delay(500);
     digitalWrite(17, HIGH);
-    delay(3000);
-    digitalWrite(17, LOW);
-}
+    digitalWrite(CS_BUZZER_PIN, HIGH);
+    delay(1000);
+    digitalWrite(CS_BUZZER_PIN, LOW);
 
 // ********** Loop
 void loop() {
