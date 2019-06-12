@@ -20,7 +20,6 @@
 #include "src/Nichrome/CSNichrome.h"
 #include "src/Volt/CSVolt.h"
 #include "src/Hall/CSHall.h"
-#include "src/Temp/CSTemp.h"
 #include "src/Telem/CSTelem.h"
 #include "src/Comms/CSComms.h"
 #include "src/CoreData/CSCoreData.h"
@@ -41,7 +40,6 @@ CSGps gps(&gpsss);
 CSGyro gyro;
 CSVolt volt;
 CSHall hall;
-CSTemp temp;
 CSNichrome nichrome;
 CSComms comms;
 CSCoreData coreData;
@@ -74,9 +72,8 @@ void setup() {
 
     bme.config();
     gyro.config();
-    volt.config(CS_VOLT_PIN);
+    volt.config(CS_VOLT1_PIN);
     nichrome.config(CS_NICHROME_PIN);
-    temp.config(CS_TEMP_PIN);
     hall.config(CS_HALL_PIN);
     sd.config("TELEM.TXT");
     
@@ -84,13 +81,14 @@ void setup() {
     float groundAlt = coreData.readFloat(CDKEY_GROUND_ALT);
     bme.setGroundAlt(groundAlt);
     
-    pinMode(17, OUTPUT);
-    digitalWrite(17, LOW);
+    // Check system startup using buzzer
+    pinMode(CS_BUZZER_PIN, OUTPUT);
+    digitalWrite(CS_BUZZER_PIN, LOW);
     delay(500);
-    digitalWrite(17, HIGH);
     digitalWrite(CS_BUZZER_PIN, HIGH);
     delay(1000);
     digitalWrite(CS_BUZZER_PIN, LOW);
+}
 
 // ********** Loop
 void loop() {
