@@ -35,8 +35,8 @@ float CSHall::getRpm() {
 
     // average of past 3 values
     unsigned long movingAverageMillis = (previous2 + previous1 + currentTime) / 3;
-    movingAverageMillis *= 1000;
     movingAverageMillis = 1 / movingAverageMillis;
+    movingAverageMillis *= 1000;
 
     //set test_rpm
     CSHall_rpm = movingAverageMillis * 60;
