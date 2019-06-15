@@ -141,7 +141,7 @@ void loop() {
         telem.gpsAlt = gps.altitude;
         telem.gpsSats = gps.satellites;
         telem.pitch = gyroData.x; // x or y? Both?
-        telem.roll = gyroData.z; // Spin rate along z axis?
+        telem.roll = gyroData.y; // Spin rate along y axis?
         telem.bladeSpinRate = hall.getRpm(); // Keep track of hall sensor hits
         // telem.state; // Does not need to be set manually here
         

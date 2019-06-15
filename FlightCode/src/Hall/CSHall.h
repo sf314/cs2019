@@ -9,6 +9,7 @@ public:
     float getRpm(void);
 private:
     int pin;
+    int arr[9];
 };
 
 #endif 
