@@ -20,18 +20,19 @@ void setup() {
     Serial.begin(9600);
 }
 
-
+int packetCount = 0;
 
 void loop() {
     t_now = millis();
     
     // Do pseudothreads
-    
+    pt_command_ingest();
     
     if (t_now - t_prev >= 1000) {
         // Send fake telem 
-        Serial.println("3623,60,40,1000,1013,20,3.3,123.5,33.5,-111.9,1410,3,0.01,0.0,9.4,3");
+        Serial.println("3623," + String(packetCount) + ".0," + String(packetCount) + ",1000,1013,20,3.3,123.5,33.5,-111.9,1410,3,0.01,0.0,9.4,3");
         
+        packetCount++;
         t_prev = t_now;
     }
     
@@ -45,6 +46,7 @@ void pt_command_ingest() {
         
         switch (c) {
             case 'g':
+                Serial.println("Alert,Setting ground height");
                 break;
             case 'q':
                 Serial.println("Alert,Starting cut");
