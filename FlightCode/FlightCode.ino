@@ -191,6 +191,48 @@ void handleCommands(char c) {
             comms.txAlert("Ending cut");
             nichrome.stop();
         }
+    case '0':
+        {
+            comms.txAlert("State 0");
+            telem.state = STATE_LAUNCHPAD;
+        }
+        break;
+    case '1':
+        {
+            comms.txAlert("State 1");
+            telem.state = STATE_ASCENT;
+        }
+        break;
+    case '2':
+        {
+            comms.txAlert("State 2");
+            telem.state = STATE_DESCENT;
+        }
+        break;
+    case '3':
+        {
+            comms.txAlert("State 3");
+            telem.state = STATE_RELEASE;
+        }
+        break;
+    case '4':
+        {
+            comms.txAlert("State 4");
+            telem.state = STATE_LANDED;
+        }
+        break;
+    case 'b':
+        {
+            comms.txAlert("Buzzer On");
+            digitalWrite(CS_BUZZER_PIN, HIGH);
+        }
+        break;
+    case 'o':
+        {
+            comms.txAlert("Buzzer Off");
+            digitalWrite(CS_BUZZER_PIN, LOW);
+        }
+        break;
     default:
         break;
     }
