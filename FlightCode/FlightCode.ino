@@ -309,5 +309,6 @@ void task_landed() {
     // Anything?
 
     // Play a buzzer 
+    digitalWrite(CS_BUZZER_PIN, HIGH);
 
 }
