@@ -2,3 +2,6 @@
 
 ## Ignore workspace stuff if you use it
 .vscode/**
+FlightCode/src/.DS_Store
+FlightCode/.DS_Store
+.DS_Store
